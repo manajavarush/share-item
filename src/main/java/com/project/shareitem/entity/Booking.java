@@ -1,4 +1,4 @@
-package com.project.shareitem.model;
+package com.project.shareitem.entity;
 
 import lombok.*;
 

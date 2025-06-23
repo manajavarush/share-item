@@ -1,7 +1,7 @@
 package com.project.shareitem.service;
 
 import com.project.shareitem.dto.UserDto;
-import com.project.shareitem.model.User;
+import com.project.shareitem.entity.User;
 
 public interface UserService {
 

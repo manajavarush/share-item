@@ -1,14 +1,18 @@
-package com.project.shareitem.model;
+package com.project.shareitem.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "users")
 public class User {
 
-    // @Setter(AccessLevel.NONE)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

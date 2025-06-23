@@ -14,7 +14,7 @@ public class ItemResponseDto {
 
     private String description;
 
-    private boolean available;
+    private Boolean available;
 
-    private int rentCount;
+    private Long ownerId;
 }

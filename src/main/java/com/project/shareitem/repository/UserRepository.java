@@ -1,6 +1,6 @@
 package com.project.shareitem.repository;
 
-import com.project.shareitem.model.User;
+import com.project.shareitem.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,12 +46,11 @@ public class UserRepository {
     }
 
     public Optional<User> findById(Long userId) {
-        String sql = "SELECT id, name, email from users WHERE id=?";
+        String sql = "SELECT id, name, email from users WHERE id = ?";
 
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, userRowMapper, userId));
         } catch (EmptyResultDataAccessException exception) {
-            log.warn("Пользователь с id:{} не найден", userId);
             return Optional.empty();
         }
     }

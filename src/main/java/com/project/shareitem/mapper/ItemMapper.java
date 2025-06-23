@@ -1,13 +1,13 @@
 package com.project.shareitem.mapper;
 
-import com.project.shareitem.dto.ItemRequestDto;
+import com.project.shareitem.dto.ItemCreateUpdateDto;
 import com.project.shareitem.dto.ItemResponseDto;
-import com.project.shareitem.model.Item;
+import com.project.shareitem.entity.Item;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface ItemMapper {
-    Item itemRequestDtoToItem(ItemRequestDto itemRequestDto);
+    Item toEntity(ItemCreateUpdateDto itemCreateUpdateDto);
 
-    ItemResponseDto itemToItemResponseDto(Item item, int rentCount);
+    ItemResponseDto toResponseDto(Item item);
 }
