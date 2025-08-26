@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: ShareItem
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: stas
+    password: password
+  jpa:
+    show-sql: true
