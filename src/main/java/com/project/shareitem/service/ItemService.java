@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -91,9 +91,12 @@ public class ItemService {
     }
 
     private List<ItemResponseDto> mapItemsToDtos(List<Item> items) {
-        return Optional.ofNullable(items)
-                .orElseGet(Collections::emptyList)
-                .stream()
+        if (items == null || items.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return items.stream()
+                .filter(Objects::nonNull)
                 .map(itemMapper::toResponseDto)
                 .toList();
     }
