@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return buildErrorResponse(exception, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(ItemNotAvailableException.class)
+    @ExceptionHandler({ItemNotAvailableException.class, CommentNowAllowedException.class})
     public ResponseEntity<ApiError> handleItemNotAvailable(ItemNotAvailableException exception) {
         return buildErrorResponse(exception, HttpStatus.BAD_REQUEST);
     }

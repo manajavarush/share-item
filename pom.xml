@@ -6,10 +6,9 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.5.0</version>
-        <relativePath/>
     </parent>
     <groupId>com.project</groupId>
-    <artifactId>TestShareItem</artifactId>
+    <artifactId>ShareItem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>ShareItem</name>
     <description>ShareItem</description>
