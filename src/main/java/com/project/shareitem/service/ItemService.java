@@ -121,27 +121,11 @@ public class ItemService {
         comment.setCreated(LocalDateTime.now());
 
         var savedComment = commentRepository.save(comment);
+
         log.info("Пользователь с id:{} написал комментарий для вещи с id:{}", userId, itemId);
 
-        // Проблемное место, может падать из-за LAZY инициализации поля
-        // Периодически падают то Comment past booking, то get item with comments -> comments field length == 0
-        // Явная инициализация LAZY-поля
-        // Hibernate.initialize(savedComment.getAuthor());
         return commentMapper.toCommentDto(savedComment);
-
-        // return toDto(savedComment);
     }
-
-
-//    private CommentDto toDto(Comment comment) {
-//        return new CommentDto(
-//                comment.getId(),
-//                comment.getText(),
-//                comment.getAuthor().getName(),
-//                comment.getCreated()
-//        );
-//    }
-
 
     private ItemBookingStatusCommentDto toBookingStatusCommentDto(Item item, boolean includeBookings) {
         var now = LocalDateTime.now();

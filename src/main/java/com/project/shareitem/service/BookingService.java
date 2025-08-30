@@ -2,7 +2,8 @@ package com.project.shareitem.service;
 
 import com.project.shareitem.dto.BookingCreateDto;
 import com.project.shareitem.dto.BookingResponseDto;
-import com.project.shareitem.entity.BookingStatus;
+import com.project.shareitem.enums.BookingStateRequest;
+import com.project.shareitem.enums.BookingStatus;
 import com.project.shareitem.exception.BookingAccessDeniedException;
 import com.project.shareitem.mapper.BookingMapper;
 import com.project.shareitem.repository.BookingRepository;
@@ -80,7 +81,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingResponseDto> getUserBookings(String state, Long userId) {
+    public List<BookingResponseDto> getUserBookings(BookingStateRequest state, Long userId) {
         validationService.validateUserExists(userId);
 
         var bookings = bookingRepository.findByBookerIdOrderByStartDesc(userId);
@@ -93,7 +94,7 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookingResponseDto> getOwnerBookings(String state, Long ownerId) {
+    public List<BookingResponseDto> getOwnerBookings(BookingStateRequest state, Long ownerId) {
         validationService.validateUserExists(ownerId);
         validationService.validateItemExistsByOwnerId(ownerId);
 

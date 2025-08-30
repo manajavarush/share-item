@@ -1,5 +1,6 @@
 package com.project.shareitem.entity;
 
+import com.project.shareitem.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

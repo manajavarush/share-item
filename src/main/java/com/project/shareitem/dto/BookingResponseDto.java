@@ -1,6 +1,6 @@
 package com.project.shareitem.dto;
 
-import com.project.shareitem.entity.BookingStatus;
+import com.project.shareitem.enums.BookingStatus;
 
 import java.time.LocalDateTime;
 

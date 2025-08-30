@@ -2,6 +2,7 @@ package com.project.shareitem.controller;
 
 import com.project.shareitem.dto.BookingCreateDto;
 import com.project.shareitem.dto.BookingResponseDto;
+import com.project.shareitem.enums.BookingStateRequest;
 import com.project.shareitem.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,10 @@ public class BookingController {
     public ResponseEntity<List<BookingResponseDto>> getUserBookings
             (@RequestParam(defaultValue = "ALL") String state,
              @RequestHeader(value = "X-Sharer-User-Id") Long userId) {
-        var bookingResponseDtos = bookingService.getUserBookings(state, userId);
+
+        BookingStateRequest stateRequest = BookingStateRequest.from(state);
+
+        var bookingResponseDtos = bookingService.getUserBookings(stateRequest, userId);
 
         return ResponseEntity.ok(bookingResponseDtos);
     }
@@ -55,7 +59,10 @@ public class BookingController {
     public ResponseEntity<List<BookingResponseDto>> getOwnerBookings
             (@RequestParam(defaultValue = "ALL") String state,
              @RequestHeader(value = "X-Sharer-User-Id") Long ownerId) {
-        var bookingResponseDtos = bookingService.getOwnerBookings(state, ownerId);
+
+        BookingStateRequest stateRequest = BookingStateRequest.from(state);
+
+        var bookingResponseDtos = bookingService.getOwnerBookings(stateRequest, ownerId);
 
         return ResponseEntity.ok(bookingResponseDtos);
     }
