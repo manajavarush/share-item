@@ -1,4 +1,4 @@
-package com.project.shareitem.entity;
+package com.project.shareitem.enums;
 
 public enum BookingStatus {
     WAITING,

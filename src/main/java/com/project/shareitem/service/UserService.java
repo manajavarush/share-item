@@ -8,6 +8,7 @@ import com.project.shareitem.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -18,25 +19,38 @@ public class UserService {
 
     private final ValidationService validationService;
 
+    @Transactional
     public User createUser(UserDto userDto) {
         validationService.validateEmailNotExists(userDto.email());
 
-        User user = userMapper.userDtoToUser(userDto);
-        log.info("Создан пользователь с email: {}", userDto.email());
+        User user = userMapper.toEntity(userDto);
+
+        log.info("Создан пользователь с email:{}", userDto.email());
 
         return userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
     public User getUserById(Long userId) {
         var user = validationService.validateUserExists(userId);
-        log.info("Получен пользователь с id: {}", userId);
+
+        log.info("Получен пользователь с id:{}", userId);
 
         return user;
     }
 
+    @Transactional
     public User updateUser(Long userId, UserDto userDto) {
         User existingUser = getUserById(userId);
 
+        applyUpdateData(userDto, existingUser);
+
+        log.info("Данные пользователя с id:{} обновлены", userId);
+
+        return existingUser;
+    }
+
+    private void applyUpdateData(UserDto userDto, User existingUser) {
         if (userDto.name() != null) {
             existingUser.setName(userDto.name());
         }
@@ -45,19 +59,19 @@ public class UserService {
             validationService.validateEmailNotExists(userDto.email());
             existingUser.setEmail(userDto.email());
         }
-
-        log.info("Данные пользователя с id: {} обновлены", userId);
-
-        return existingUser;
     }
 
+    @Transactional
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
-            log.warn("Пользователь с id: {} не найден", userId);
+
+            log.warn("Пользователь с id:{} не найден", userId);
+
             throw new UserNotFoundException(userId);
         }
 
+        log.info("Пользователь с id:{} удален", userId);
+
         userRepository.deleteById(userId);
-        log.info("Пользователь с id: {} удален", userId);
     }
 }

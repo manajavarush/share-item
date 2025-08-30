@@ -1,5 +1,7 @@
 package com.project.shareitem.controller;
 
+import com.project.shareitem.dto.CommentDto;
+import com.project.shareitem.dto.ItemBookingStatusCommentDto;
 import com.project.shareitem.dto.ItemCreateUpdateDto;
 import com.project.shareitem.dto.ItemResponseDto;
 import com.project.shareitem.service.ItemService;
@@ -34,18 +36,19 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemResponseDto> getItemById(@PathVariable Long itemId) {
-        var itemResponseDto = itemService.getItemById(itemId);
+    public ResponseEntity<ItemBookingStatusCommentDto> getItemById(@PathVariable Long itemId,
+                                                                   @RequestHeader(value = "X-Sharer-User-Id") Long userId) {
+        var itemResponseDto = itemService.getItemById(itemId, userId);
 
         return ResponseEntity.ok(itemResponseDto);
     }
 
     @GetMapping
-    public ResponseEntity<List<ItemResponseDto>> getAllItemsByUser(
+    public ResponseEntity<List<ItemBookingStatusCommentDto>> getAllItemsByUser(
             @RequestHeader(value = "X-Sharer-User-Id") Long ownerId) {
-        var itemResponseDtos = itemService.getAllItemsByUserId(ownerId);
+        var itemBookingStatusDtos = itemService.getAllItemsByUserId(ownerId);
 
-        return ResponseEntity.ok(itemResponseDtos);
+        return ResponseEntity.ok(itemBookingStatusDtos);
     }
 
     @GetMapping("/search")
@@ -53,5 +56,14 @@ public class ItemController {
         var itemResponseDtos = itemService.searchItems(text);
 
         return ResponseEntity.ok(itemResponseDtos);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public ResponseEntity<CommentDto> createComment(@PathVariable Long itemId,
+                                                    @RequestBody CommentDto commentDto,
+                                                    @RequestHeader(value = "X-Sharer-User-Id") Long userId) {
+        var comment = itemService.createComment(itemId, commentDto, userId);
+
+        return ResponseEntity.ok(comment);
     }
 }
